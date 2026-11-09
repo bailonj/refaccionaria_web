@@ -84,11 +84,14 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'postgres'),
+        'NAME': os.environ.get('DB_NAME', 'dbrefaccionaria'),
         'USER': os.environ.get('DB_USER', 'userazure'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'Bailon22B'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require', # ¡Obligatorio para Azure PostgreSQL!
+        },
         
     }
 }
