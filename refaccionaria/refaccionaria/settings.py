@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-clave-secreta-local-aqui')
 ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME', '127.0.0.1'), 'localhost']
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
-    'https://refaccionaria-web-gve7ghabh4eadae9.westus3-01.azurewebsites.net'
+    'refaccionaria-bjb9f6hjfjeuaae3.westus3-01.azurewebsites.net'
 ]
 
 
