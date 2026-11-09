@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'tu-clave-secreta-local-aqui')
 
 # 2. HOSTS PERMITIDOS
 # WEBSITE_HOSTNAME es una variable que Azure inyecta automáticamente con tu dominio (ej. tu-app.azurewebsites.net)
-ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME', '127.0.0.1'), 'localhost']
+#ALLOWED_HOSTS = [os.environ.get('WEBSITE_HOSTNAME', '127.0.0.1'), 'localhost']
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'refaccionaria-bjb9f6hjfjeuaae3.westus3-01.azurewebsites.net'
