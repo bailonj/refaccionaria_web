@@ -1,0 +1,51 @@
+{% extends "tienda/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-7">
+        <div class="card shadow-sm p-4 mb-4">
+            <h4 class="mb-3">📋 Datos de Entrega y Contacto</h4>
+            <form action="{% url 'tienda:checkout' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Nombre Completo:</label>
+                    <input type="text" name="nombre" class="form-control" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Teléfono de Contacto:</label>
+                    <input type="tel" name="telefono" class="form-control" placeholder="Ej: 7441234567" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Dirección de Envío o Notas:</label>
+                    <textarea name="direccion" class="form-control" rows="3" placeholder="Calle, número, colonia o si pasas a recoger en sucursal" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg w-100 fw-bold mt-2">
+                    📲 Confirmar y Enviar Pedido por WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card shadow-sm p-4">
+            <h4 class="mb-3">Resumen de Compra</h4>
+            <ul class="list-group list-group-flush mb-3">
+                {% for item in items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <h6 class="my-0">{{ item.refaccion.nombre }}</h6>
+                        <small class="text-muted">Cant: {{ item.cantidad }} | SKU: {{ item.refaccion.sku }}</small>
+                    </div>
+                    <span class="text-muted">${{ item.obtener_costo }}</span>
+                </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold fs-5">
+                    <span>Total</span>
+                    <span class="text-primary">${{ total }} MXN</span>
+                </li>
+            </ul>
+            <a href="{% url 'tienda:ver_carrito' %}" class="btn btn-outline-secondary w-100">Modificar Carrito</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

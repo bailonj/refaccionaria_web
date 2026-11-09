@@ -1,0 +1,48 @@
+{% extends "tienda/base.html" %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <div class="row">
+        <div class="col-md-5 text-center">
+            {% if refaccion.imagen %}
+                <img src="{{ refaccion.imagen.url }}" class="img-fluid rounded" alt="{{ refaccion.nombre }}">
+            {% else %}
+                <div class="bg-secondary text-white py-5 rounded">Sin Imagen Disponible</div>
+            {% endif %}
+        </div>
+        <div class="col-md-7">
+            <span class="badge bg-dark mb-2">SKU: {{ refaccion.sku }}</span>
+            <h2>{{ refaccion.nombre }}</h2>
+            <p class="text-muted">Categoría: <strong>{{ refaccion.categoria.nombre }}</strong></p>
+            
+            <div class="alert alert-secondary">
+                <strong>Compatibilidad garantizada:</strong><br>
+                {{ refaccion.compatibilidad }}
+            </div>
+
+            <h2 class="text-primary fw-bold my-3">${{ refaccion.precio }} MXN</h2>
+            
+            <p><strong>Disponibles en inventario:</strong> {{ refaccion.stock }} piezas</p>
+            <p>{{ refaccion.descripcion }}</p>
+
+            <!-- Formulario seguro con CSRF Token -->
+            <form action="{% url 'tienda:agregar_al_carrito' refaccion.id %}" method="post" class="mt-3">
+                {% csrf_token %}
+                <div class="row g-2 mb-3">
+                    <div class="col-3">
+                        <label class="form-label small fw-bold">Cantidad:</label>
+                        <input type="number" name="cantidad" value="1" min="1" max="{{ refaccion.stock }}" class="form-control form-control-lg text-center">
+                    </div>
+                    <div class="col-9 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success btn-lg w-100 fw-bold">
+                            🛒 Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <a href="{% url 'tienda:lista_refacciones' %}" class="btn btn-link w-100 text-center mt-2">← Volver al catálogo</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "tienda/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">🛒 Tu Carrito de Compras</h2>
+
+{% if items %}
+<div class="table-responsive bg-white shadow-sm rounded p-3">
+    <table class="table align-middle mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>Refacción</th>
+                <th>Precio Unitario</th>
+                <th class="text-center">Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <strong>{{ item.refaccion.nombre }}</strong><br>
+                    <small class="text-muted">SKU: {{ item.refaccion.sku }}</small>
+                </td>
+                <td>${{ item.refaccion.precio }}</td>
+                <td class="text-center">{{ item.cantidad }}</td>
+                <td class="fw-bold">${{ item.obtener_costo }}</td>
+                <td>
+                    <!-- Eliminación segura por POST con CSRF token -->
+                    <form action="{% url 'tienda:eliminar_del_carrito' item.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-white shadow-sm rounded">
+    <a href="{% url 'tienda:lista_refacciones' %}" class="btn btn-outline-secondary">← Seguir buscando refacciones</a>
+    <div class="text-end">
+        <h3 class="fw-bold text-primary">Total: ${{ total }} MXN</h3>
+       <a href="{% url 'tienda:checkout' %}" class="btn btn-success btn-lg fw-bold mt-2">Proceder al Pago / Checkout</a>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info text-center py-5">
+    <h4>Tu carrito está vacío.</h4>
+    <a href="{% url 'tienda:lista_refacciones' %}" class="btn btn-primary mt-3">Explorar Refacciones</a>
+</div>
+{% endif %}
+{% endblock %}
